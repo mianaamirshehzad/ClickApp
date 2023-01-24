@@ -3,17 +3,19 @@ import { View, Text, StyleSheet, Platform, TouchableOpacity, KeyboardAvoidingVie
 
 const Task = (props) => {
     return (
-        <View style = {styles.item} >
-            <View style = {styles.itemLeft}>
-                <TouchableOpacity style = {styles.square}></TouchableOpacity>
-                <Text style = {styles.text}>{props.text}</Text>
+        <View style={styles.item} >
+            <View style={styles.itemLeft}>
+                <TouchableOpacity style={styles.square}></TouchableOpacity>
+                <Text style={styles.text}>
+                    {props.text}
+                </Text>
             </View>
-            <View style = {styles.circular}></View>
+            <View style={styles.circular}></View>
 
             {/* Write a New Task Section */}
             <KeyboardAvoidingView
-               behavior= {Platform.os === 'ios' ? 'padding' : 'height' }
-               style = {styles.writeTastWrapper} >
+                // behavior={Platform.os === 'ios' ? 'padding' : 'height'}
+                style={styles.writeTastWrapper} >
                 <TextInput />
             </KeyboardAvoidingView>
         </View>
@@ -23,7 +25,7 @@ const Task = (props) => {
 const styles = StyleSheet.create({
     item: {
         backgroundColor: 'white',
-        padding: 15, 
+        padding: 15,
         borderRadius: 10,
         marginBottom: 5,
         justifyContent: 'space-between',
@@ -53,6 +55,9 @@ const styles = StyleSheet.create({
         borderColor: '#55BCF6',
         borderRadius: 5,
         borderWidth: 2
+    },
+    writeTastWrapper: {
+
     }
 });
 

@@ -7,11 +7,14 @@ export default function App() {
   return (
     <View style={styles.container}>
       <View style={styles.taskWrapper}>
-        <Text style={styles.title}>Today's Tasks</Text>
+        <Text style={styles.title}>
+          Today's Tasks
+        </Text>
         <View style={styles.item}>
           {/* Here our task list will appear */}
-          <Task text = {"Complete the App"} />
-          <Task  text = {"Buy a Book"} />
+          <Task text={"Complete the App"} />
+          <Task text={"Buy a Book"} />
+          <Task text={"Complete the App of FYP"} />
         </View>
       </View>
     </View>
