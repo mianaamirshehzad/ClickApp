@@ -5,19 +5,17 @@ const Task = (props) => {
     return (
         <View style={styles.item} >
             <View style={styles.itemLeft}>
-                <TouchableOpacity style={styles.square}></TouchableOpacity>
+                <TouchableOpacity
+                    onPress={ props.onPress}
+                    style={styles.square}>
+                </TouchableOpacity>
                 <Text style={styles.text}>
                     {props.text}
                 </Text>
             </View>
             <View style={styles.circular}></View>
 
-            {/* Write a New Task Section */}
-            <KeyboardAvoidingView
-                // behavior={Platform.os === 'ios' ? 'padding' : 'height'}
-                style={styles.writeTastWrapper} >
-                <TextInput />
-            </KeyboardAvoidingView>
+
         </View>
     );
 };
@@ -29,7 +27,8 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginBottom: 5,
         justifyContent: 'space-between',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        alignItems: 'center'
     },
     itemLeft: {
         flexDirection: 'row',

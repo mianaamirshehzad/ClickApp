@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, Touchable, TouchableOpacity } from "react-native";
+import { StyleSheet, ScrollView, Text, View, KeyboardAvoidingView, Keyboard, TextInput, TouchableOpacity } from "react-native";
 
 import Task from "./src/components/Task";
 
@@ -10,9 +10,22 @@ export default function App() {
 
   const addTask = () => {
     //Using spread operator to add new and previous task together
+    Keyboard.dismiss();
     console.log(task)
-    setTaskList(...taskList, task);
+    // setTaskList(...taskList, task);
+    if (taskList !== null) {
+      taskList.push(task);
+    } else {
+      setTaskList(task)
+    }
     setTask(null); //This will empty the textbox
+  };
+
+  const markTaskAsComplete = (index) => {
+    let itemsCopy = [...taskList];
+    itemsCopy.splice(index, 1);
+    setTaskList(itemsCopy);
+    console.log('Task marked as done')
   }
 
   return (
@@ -21,16 +34,25 @@ export default function App() {
         <Text style={styles.title}>
           Today's Tasks
         </Text>
-        <View style={styles.item}>
-          {/* Here our task list will appear */}
-          {
-            taskList.map((item) => {
-              return <Task
-                text={item} />
-            })
-          }
+        <ScrollView>
+          <View style={styles.item}>
+            {/* Here our task list will appear */}
+            {
+              taskList.map((item, index) => {
+                return (
+                  <TouchableOpacity
+                    key={index}
+                    onPress={() => markTaskAsComplete(index)} >
+                    <Task
+                      text={item}
+                    />
+                  </TouchableOpacity>
+                )
+              })
+            }
 
-        </View>
+          </View>
+        </ScrollView>
       </View>
 
       {/* Write a New Task Section */}
@@ -63,6 +85,7 @@ const styles = StyleSheet.create({
   taskWrapper: {
     paddingTop: 80,
     paddingLeft: 20,
+    paddingRight: 10
   },
   title: {
     fontSize: 24,
@@ -92,7 +115,7 @@ const styles = StyleSheet.create({
   addWrapper: {
     height: 60,
     width: 60,
-    backgroundColor: '#FFF',
+    backgroundColor: '#55BCF6',
     borderRadius: 60,
     justifyContent: 'center',
     alignItems: 'center',
