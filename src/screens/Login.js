@@ -1,10 +1,14 @@
 import { useState, useEffect } from 'react';
 import { View, Text, Button, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
-// import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
+import CustomInput from '../components/CustomInput';
+import CustomButton from '../components/CustomButton';
+import app from '../Firebase';
 
 const Login = (props) => {
 
-    // const auth = getAuth();
+    const auth = getAuth(app);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -15,9 +19,7 @@ const Login = (props) => {
                 .then(userCredentials => {
                     const user = userCredentials.user;
                     console.log('Login with', user.email);
-                    // alert('Enter the Right E mail')
-                    alert("Signin");
-                    props.navigation.navigate("Tabs")
+                    props.navigation.navigate('TaskScreen');
                 })
                 .catch(error => alert(error.message))
         } catch {
@@ -27,6 +29,10 @@ const Login = (props) => {
 
     return (
         <View style={styles.container} >
+            
+            <Image
+                source={require('../../assets/login.jpg')}
+                style={styles.image} />
             <Text style={styles.titleText}>
                 Hello Again!
             </Text>
@@ -34,14 +40,14 @@ const Login = (props) => {
                 Welcome back. You've been missed!
             </Text>
             <CustomInput
-                myPlaceholder="Email"
-                myOnChangeText ={(text) => setEmail(text)}
-            />
+                placeholder="Email"
+                onChangeText={(text) => setEmail(text)} />
             <CustomInput
-                myPlaceholder="Password"
-                mySecureTextEntry={true}
-                myOnChangeText ={(text) => setPassword(text)}
-            />
+                placeholder="Password"
+                onChangeText={(text) => setPassword(text)}
+                secureTextEntry = {true} />
+
+
             <View style={{ flexDirection: 'row' }} >
                 <TouchableOpacity
                     style={styles.loginInstead}
@@ -58,11 +64,9 @@ const Login = (props) => {
                     </Text>
                 </TouchableOpacity>
             </View>
-            {/* <View style={{ width: '90%', alignSelf: 'center', padding: 10 }}> */}
-
             <CustomButton
-                name='Login'
-                myOnPress = {() => onLoginPress()} />
+                name="Login"
+                onPress={() => onLoginPress()} />
         </View>
 
     )
@@ -70,6 +74,7 @@ const Login = (props) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        justifyContent: 'center',
     },
     titleText: {
         fontStyle: 'normal',
@@ -77,8 +82,8 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         fontSize: 25,
         padding: 10,
-        marginTop: 30,
-        marginBottom: 5,
+        marginTop: 10,
+        marginBottom: 3,
         marginRight: 5,
         marginLeft: 5,
         fontWeight: 'bold'
@@ -88,11 +93,9 @@ const styles = StyleSheet.create({
         color: 'black',
         alignSelf: 'center',
         fontSize: 15,
-        padding: 15,
-        // marginTop: 5,
-        marginBottom: 7,
         marginRight: 5,
         marginLeft: 5,
+        paddingBottom: 5
     },
     placeCenter: {
         color: '#4b4df8',
@@ -113,6 +116,13 @@ const styles = StyleSheet.create({
         marginRight: 'auto',
         marginLeft: 10
     },
+    image: {
+        width: 150,
+        height: 150,
+        borderRadius: 80,
+        justifyContent: 'center',
+        alignSelf: 'center'
+    }
 });
 
 

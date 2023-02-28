@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { StyleSheet, ScrollView, Text, View, KeyboardAvoidingView, Keyboard, TextInput, TouchableOpacity } from "react-native";
+import { StyleSheet, ScrollView, Text, View, KeyboardAvoidingView, FlatList, Keyboard, TextInput, TouchableOpacity } from "react-native";
 
 import Task from '../components/Task';
 
-export default function TaskScreen() {
+export default function TaskScreen(props) {
 
   const [task, setTask] = useState("");
   const [taskList, setTaskList] = useState([]);
@@ -115,12 +115,14 @@ const styles = StyleSheet.create({
   addWrapper: {
     height: 60,
     width: 60,
-    backgroundColor: '#55BCF6',
+    backgroundColor: '#008000',
     borderRadius: 60,
     justifyContent: 'center',
     alignItems: 'center',
     borderColor: '#C0C0C0',
     borderWidth: 1,
+  },
+  addText: {
+    color: 'white'
   }
-  // addText
 });

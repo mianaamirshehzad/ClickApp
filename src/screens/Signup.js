@@ -1,17 +1,13 @@
 import { View, Text, Button, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native'
 import { useState } from 'react'
-// import { addDoc, getFirestore, collection, getDoc, setDoc, doc } from 'firebase/firestore';
-// import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-// import app from '../firebase';
-
-import CustomInput from '../components/CustomInput';
+import { addDoc, getFirestore, collection, getDoc, setDoc, doc } from 'firebase/firestore';
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import app from '../Firebase';
 import CustomButton from '../components/CustomButton';
-
-
+import CustomInput from '../components/CustomInput';
 
 const Signup = (props) => {
-
-    // const auth = getAuth(app);
+    const auth = getAuth(app);
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -30,7 +26,6 @@ const Signup = (props) => {
                         const user = userCredential.user;
                         // ...
                         alert("User created");
-                        props.navigation.navigate("Tabs");
                     })
                     .catch((error) => {
                         const errorCode = error.code;
@@ -48,6 +43,9 @@ const Signup = (props) => {
     return (
         <ScrollView>
             <View style={styles.container} >
+                <Image
+                    source={require('../../assets/signup.jpg')}
+                    style={styles.image} />
                 <Text style={styles.titleText} >
                     Let's Join
                 </Text>
@@ -55,22 +53,22 @@ const Signup = (props) => {
                     Account creation in a few Taps
                 </Text>
                 <CustomInput
-                    myPlaceholder="Enter First Name"
-                    myOnChangeText={(text) => setFirstName(text)} />
+                    placeholder="First Name"
+                    onChangeText={(text) => setFirstName(text)} />
                 <CustomInput
-                    myPlaceholder="Enter Last Name"
-                    myOnChangeText={(text) => setLastName(text)} />
+                    placeholder="Last Name"
+                    onChangeText={(text) => setLastName(text)} />
                 <CustomInput
-                    myPlaceholder="Enter Email"
-                    myOnChangeText={(text) => setEmail(text)} />
+                    placeholder="Email"
+                    onChangeText={(text) => setEmail(text)} />
                 <CustomInput
-                    myPlaceholder="Enter Password"
-                    mySecureTextEntry={true}
-                    myOnChangeText={(text) => setPassword(text)} />
+                    placeholder="Password"
+                    secureTextEntry={true}
+                    onChangeText={(text) => setPassword(text)} />
                 <CustomInput
-                    myPlaceholder="Re-enter Password"
-                    mySecureTextEntry={true}
-                    myOnChangeText={(text) => setConfirmPass(text)} />
+                    placeholder="Re-enter Password"
+                    secureTextEntry={true}
+                    onChangeText={(text) => setConfirmPass(text)} />
 
                 {/* Forgot Password */}
                 <View style={{ flexDirection: 'row' }} >
@@ -94,9 +92,7 @@ const Signup = (props) => {
                 {/* Button to call a function for Account Creation*/}
                 <CustomButton
                     name="Signup"
-                    myOnPress={() => onSignupPressed()}
-                />
-
+                    onPress = {() => onSignupPressed()} />
             </View>
         </ScrollView>
     )
@@ -114,8 +110,8 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         fontSize: 25,
         padding: 10,
-        marginTop: 30,
-        marginBottom: 5,
+        marginTop: 10,
+        marginBottom: 3,
         marginRight: 5,
         marginLeft: 5,
         fontWeight: 'bold'
@@ -125,8 +121,6 @@ const styles = StyleSheet.create({
         color: 'black',
         alignSelf: 'center',
         fontSize: 15,
-        padding: 15,
-        // marginTop: 5,
         marginBottom: 7,
         marginRight: 5,
         marginLeft: 5,
@@ -155,10 +149,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 70,
 
-    },
-    image: {
-        width: 100,
-        height: 100,
     },
     bottomButton: {
         backgroundColor: '#4b4df8',
@@ -189,6 +179,14 @@ const styles = StyleSheet.create({
         marginRight: 'auto',
         marginLeft: 10
     },
+    image: {
+        width: 150,
+        height: 150,
+        borderRadius: 80,
+        justifyContent: 'center',
+        alignSelf: 'center',
+        marginTop: 30
+    }
 });
 
 export default Signup;
