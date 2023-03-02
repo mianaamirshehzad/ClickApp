@@ -1,32 +1,46 @@
 import React, { useState } from 'react';
 import { StyleSheet, ScrollView, Text, View, KeyboardAvoidingView, FlatList, Keyboard, TextInput, TouchableOpacity } from "react-native";
-
+import { doc, setDoc, getFirestore, collection } from 'firebase/firestore';
 import Task from '../components/Task';
+import app from '../Firebase';
+import { getAuth } from 'firebase/auth';
+
 
 export default function TaskScreen(props) {
+
+  const db = getFirestore(app);
+  const auth = getAuth();
 
   const [task, setTask] = useState("");
   const [taskList, setTaskList] = useState([]);
 
-  const addTask = () => {
-    //Using spread operator to add new and previous task together
+  const addTask = async () => {
+    // Add a new document in collection "cities"
+    await setDoc(doc(db, "users", auth.email), {
+      name: "Los Angeles",
+      state: "CA",
+      country: "USA"
+    });
+    console.log('collection')
+
+    // //Using spread operator to add new and previous task together
     Keyboard.dismiss();
     console.log(task)
-    // setTaskList(...taskList, task);
-    if (taskList !== null) {
-      taskList.push(task);
-    } else {
-      setTaskList(task)
-    }
+    // // setTaskList(...taskList, task);
+    // if (taskList !== null) {
+    //   taskList.push(task);
+    // } else {
+    //   setTaskList(task)
+    // }
     setTask(null); //This will empty the textbox
   };
 
-  const markTaskAsComplete = (index) => {
-    let itemsCopy = [...taskList];
-    itemsCopy.splice(index, 1);
-    setTaskList(itemsCopy);
-    console.log('Task marked as done')
-  }
+  // const markTaskAsComplete = (index) => {
+  //   let itemsCopy = [...taskList];
+  //   itemsCopy.splice(index, 1);
+  //   setTaskList(itemsCopy);
+  //   console.log('Task marked as done')
+  // }
 
   return (
     <View style={styles.container}>
