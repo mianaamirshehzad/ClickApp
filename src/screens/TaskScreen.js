@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, ScrollView, Text, View, KeyboardAvoidingView, FlatList, Keyboard, TextInput, TouchableOpacity } from "react-native";
 import { doc, setDoc, getFirestore, collection } from 'firebase/firestore';
 import Task from '../components/Task';
 import app from '../Firebase';
 import { getAuth } from 'firebase/auth';
+import axios from 'axios';
 
 
 export default function TaskScreen(props) {
@@ -13,6 +14,7 @@ export default function TaskScreen(props) {
 
   const [task, setTask] = useState("");
   const [taskList, setTaskList] = useState([]);
+  const [temperature, setTemperature] = useState("");
 
   const addTask = async () => {
     // Add a new document in collection "cities"
@@ -40,11 +42,38 @@ export default function TaskScreen(props) {
   //   itemsCopy.splice(index, 1);
   //   setTaskList(itemsCopy);
   //   console.log('Task marked as done')
-  // }
+  // };
+
+  const getTemperture = async () => {
+    try {
+      let url = "https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid=c9111fea1d9e35e45092c5b4d56507d4";
+      const response = await axios.get(url)
+        .then((response) => {
+          console.log(response);
+          // Code for handling the response
+          setTemperature(response.data);
+        })
+        .catch((error) => {
+          alert('Error')
+          // Code for handling the error
+        })
+    } catch (error) {
+      console.log(error);
+
+    }
+  };
+
+  useEffect(() => {
+    getTemperture();
+  }, [])
 
   return (
     <View style={styles.container}>
       <View style={styles.taskWrapper}>
+        <Text>
+          Temperature: {temperature.main.temp}
+          City: {temperature.name}
+        </Text>
         <Text style={styles.title}>
           Today's Tasks
         </Text>
@@ -79,7 +108,7 @@ export default function TaskScreen(props) {
           value={task}
           style={styles.input} />
         <TouchableOpacity
-          onPress={() => addTask()} >
+          onPress={() => getTemperture()} >
           <View style={styles.addWrapper} >
             <Text style={styles.addText} >
               +
