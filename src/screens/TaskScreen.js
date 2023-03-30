@@ -17,32 +17,24 @@ export default function TaskScreen(props) {
   const [temperature, setTemperature] = useState("");
 
   const addTask = async () => {
-    // Add a new document in collection "cities"
-    await setDoc(doc(db, "users", auth.email), {
-      name: "Los Angeles",
-      state: "CA",
-      country: "USA"
-    });
-    console.log('collection')
-
-    // //Using spread operator to add new and previous task together
+    //Using spread operator to add new and previous task together
     Keyboard.dismiss();
     console.log(task)
-    // // setTaskList(...taskList, task);
-    // if (taskList !== null) {
-    //   taskList.push(task);
-    // } else {
-    //   setTaskList(task)
-    // }
+    // setTaskList(...taskList, task);
+    if (taskList !== null) {
+      taskList.push(task);
+    } else {
+      setTaskList(task)
+    }
     setTask(null); //This will empty the textbox
   };
 
-  // const markTaskAsComplete = (index) => {
-  //   let itemsCopy = [...taskList];
-  //   itemsCopy.splice(index, 1);
-  //   setTaskList(itemsCopy);
-  //   console.log('Task marked as done')
-  // };
+  const markTaskAsComplete = (index) => {
+    let itemsCopy = [...taskList];
+    itemsCopy.splice(index, 1);
+    setTaskList(itemsCopy);
+    console.log('Task marked as done')
+  };
 
   const getTemperture = async () => {
     try {
@@ -71,8 +63,8 @@ export default function TaskScreen(props) {
     <View style={styles.container}>
       <View style={styles.taskWrapper}>
         <Text>
-          Temperature: {temperature.main.temp}
-          City: {temperature.name}
+          {/* Temperature: {temperature.main.temp} */}
+          {/* City: {temperature.name} */}
         </Text>
         <Text style={styles.title}>
           Today's Tasks
@@ -108,7 +100,7 @@ export default function TaskScreen(props) {
           value={task}
           style={styles.input} />
         <TouchableOpacity
-          onPress={() => getTemperture()} >
+          onPress={() => addTask()} >
           <View style={styles.addWrapper} >
             <Text style={styles.addText} >
               +

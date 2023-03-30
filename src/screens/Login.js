@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { View, Text, Button, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
+
+import { storeUserLogin, retrieveUserLogin } from '../LocalStorage';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import app from '../Firebase';
@@ -21,7 +23,8 @@ const Login = (props) => {
                     console.log('Login with', user.email);
                     props.navigation.navigate('TaskScreen');
                 })
-                .catch(error => alert(error.message))
+                .catch(error => alert(error.message));
+                storeUserLogin(email, password);
         } catch {
             alert('Email or Password is incorrect. Please retry!');
         }
